@@ -1,6 +1,10 @@
 import csv
+import os
 
-with open("budget_data.csv", newline = '') as file:
+path = os.path.join("Resources" ,"budget_data.csv")
+#opening file
+with open(path, "r") as file:
+    #initializing my variables
     numMonths = 0
     maxProfit = 0
     maxMonth = ""
@@ -8,16 +12,20 @@ with open("budget_data.csv", newline = '') as file:
     minMonth = ""
     totalProfit = 0
 
-    fileReader = csv.reader(file)
+    #reading it as a csb
+    fileReader = csv.reader(file, delimiter = ',')
 
+    #skipping header
     columns = next(fileReader)
 
+    #for each element in the file
     for row in fileReader:
-        
+        #keepin track of our months and nabbing our current profit for this iteration
         numMonths = numMonths + 1
         profit = int(row[1])
         totalProfit = totalProfit + profit
         
+        #seeing if we got min/max
         if(profit > maxProfit):
             
             maxProfit = profit
@@ -42,6 +50,7 @@ with open("budget_data.csv", newline = '') as file:
     print(f"Greatest Decrease in Profits: {minMonth} (${minProfit})")
     print("")
 
+#export time
 with open("Financial_Analysis.txt", "w+") as outFile:
     outFile.write("Financial Analysis\n")
     outFile.write("------------------\n")
