@@ -11,6 +11,8 @@ with open(path, "r") as file:
     minProfit = 0
     minMonth = ""
     totalProfit = 0
+    previousProfit = 0
+    change = []
 
     #reading it as a csb
     fileReader = csv.reader(file, delimiter = ',')
@@ -23,6 +25,8 @@ with open(path, "r") as file:
         #keepin track of our months and nabbing our current profit for this iteration
         numMonths = numMonths + 1
         profit = int(row[1])
+        change.append(profit - previousProfit)
+        previousProfit = profit
         totalProfit = totalProfit + profit
         
         #seeing if we got min/max
@@ -36,7 +40,11 @@ with open(path, "r") as file:
             minProfit = profit
             minMonth = row[0]
         
-    averageProfit = totalProfit / numMonths
+    totalDiff = 0
+
+    for diff in change:
+        totalDiff = totalDiff + diff
+    averageProfit = totalDiff / numMonths
 
 
     #print time
